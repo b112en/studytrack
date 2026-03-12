@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import router from '../router'
+import { useUserStore } from './userStore'
 
 export const useAuthStore = defineStore('auth', () => {
-  const users = ref([
-    {
-      id: 1,
-      fullName: 'Demo User',
-      email: 'user@example.com',
-      password: 'Password1!',
-      role: 'Student',
-    },
-  ])
+  const userStore = useUserStore()
+  const users = computed(() => userStore.users)
 
   const currentUser = ref(null)
   const flashMessage = ref('')
 
   const isAuthenticated = computed(() => !!currentUser.value)
+
+  const userRole = computed(() => currentUser.value?.role ?? '')
+  const userInitial = computed(() => {
+    const name = currentUser.value?.fullName ?? ''
+    return name ? name.trim().charAt(0).toUpperCase() : ''
+  })
 
   const setFlashMessage = (message) => {
     flashMessage.value = message
@@ -42,9 +42,11 @@ export const useAuthStore = defineStore('auth', () => {
       email: normalizedEmail,
       password,
       role,
+      joined: new Date().toISOString().slice(0, 10),
+      status: 'Active',
     }
 
-    users.value.push(newUser)
+    userStore.addUser(newUser)
     currentUser.value = newUser
     setFlashMessage('Account created successfully!')
 
@@ -84,6 +86,8 @@ export const useAuthStore = defineStore('auth', () => {
     users,
     currentUser,
     isAuthenticated,
+    userRole,
+    userInitial,
     flashMessage,
     setFlashMessage,
     register,
