@@ -20,6 +20,23 @@
             This is your StudyTrack dashboard. From here you can access features based on your role.
           </p>
 
+          <div class="grid gap-3 sm:grid-cols-2">
+            <div class="rounded-xl border card-theme p-4">
+              <p class="text-xs uppercase tracking-wide text-slate-400">Task Progress</p>
+              <p class="mt-1 text-2xl font-semibold text-white">{{ completedTasks }} / {{ totalTasks }} done</p>
+              <div class="mt-2 h-2 w-full rounded-full bg-white/20">
+                <div
+                  class="h-full rounded-full bg-emerald-400 transition-all"
+                  :style="{ width: totalTasks > 0 ? `${Math.round((completedTasks / totalTasks) * 100)}%` : '0%' }"
+                ></div>
+              </div>
+            </div>
+            <div class="rounded-xl border card-theme p-4">
+              <p class="text-xs uppercase tracking-wide text-slate-400">Study Tip</p>
+              <p class="mt-2 text-sm text-slate-200">{{ studyTip }}</p>
+            </div>
+          </div>
+
           <button
             @click="logout"
             class="w-full rounded-lg bg-rose-500 px-4 py-2 text-sm font-semibold text-white shadow-sm transition hover:bg-rose-400 focus:outline-none focus:ring-2 focus:ring-rose-300"
@@ -35,13 +52,20 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
 import { useAuthStore } from '../stores/authStore'
+import { useTaskStore } from '../stores/taskStore'
 import AdminDashboard from './AdminDashboard.vue'
 
 const auth = useAuthStore()
+const taskStore = useTaskStore()
 
 const userName = computed(() => auth.currentUser?.fullName ?? 'Member')
 const role = computed(() => auth.currentUser?.role ?? 'Student')
 const isAdmin = computed(() => role.value === 'Admin')
+
+const totalTasks = computed(() => taskStore.totalTasks)
+const completedTasks = computed(() => taskStore.completedTasks)
+const studyTips = ['Break complex topics into shorter sessions.', 'Practice with flashcards and self quizzes.', 'Teach someone else what you learned today.', 'Set a realistic goal and take a short walk after each achievement.']
+const studyTip = computed(() => studyTips[new Date().getDate() % studyTips.length])
 
 const toastVisible = ref(false)
 const toastMessage = ref('')

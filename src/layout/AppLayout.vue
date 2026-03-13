@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex bg-slate-950 text-slate-100">
+  <div :class="['min-h-screen flex', theme === 'dark' ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900']">
     <!-- Desktop sidebar -->
     <aside class="hidden md:block w-64 fixed inset-y-0 left-0 top-0 border-r border-slate-800 bg-slate-950">
       <Sidebar />
@@ -34,12 +34,15 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
+import { ref, watch, computed } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from './Sidebar.vue'
 import Navbar from './Navbar.vue'
+import { useThemeStore } from '../stores/themeStore'
 
 const route = useRoute()
+const themeStore = useThemeStore()
+const theme = computed(() => themeStore.theme)
 const isSidebarOpen = ref(false)
 
 function toggleSidebar() {

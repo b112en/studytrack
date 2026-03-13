@@ -28,6 +28,16 @@
       <button
         type="button"
         class="relative p-2 rounded-full hover:bg-slate-800"
+        aria-label="Toggle theme"
+        @click="themeStore.toggleTheme()"
+        title="Toggle light / dark"
+      >
+        <span class="text-lg">{{ theme === 'dark' ? '☀️' : '🌙' }}</span>
+      </button>
+
+      <button
+        type="button"
+        class="relative p-2 rounded-full hover:bg-slate-800"
         aria-label="Notifications"
       >
         <span class="text-lg">🔔</span>
@@ -87,10 +97,13 @@
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
+import { useThemeStore } from '../stores/themeStore'
 
 const route = useRoute()
 const router = useRouter()
 const auth = useAuthStore()
+const themeStore = useThemeStore()
+const theme = computed(() => themeStore.theme)
 
 const currentUser = computed(() => auth.currentUser)
 const userInitial = computed(() => auth.userInitial)

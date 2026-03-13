@@ -141,15 +141,16 @@
             <button
               type="button"
               class="relative inline-flex h-6 w-12 items-center rounded-full bg-white/10 p-1"
-              @click="preferences.theme = preferences.theme === 'dark' ? 'light' : 'dark'"
+              @click="themeStore.toggleTheme()"
             >
               <span
                 class="h-4 w-4 rounded-full bg-indigo-500 transition-transform"
-                :class="preferences.theme === 'dark' ? 'translate-x-6' : 'translate-x-0'"
+                :class="theme === 'dark' ? 'translate-x-6' : 'translate-x-0'"
               />
             </button>
             <span class="text-sm text-slate-200">Dark</span>
           </div>
+          <p class="mt-1 text-xs text-slate-300">Current theme: <strong class="text-indigo-300">{{ theme }}</strong></p>
         </div>
 
         <div class="grid gap-3 md:grid-cols-3">
@@ -208,11 +209,14 @@
 <script setup>
 import { computed, ref } from 'vue'
 import { useAuthStore } from '../stores/authStore'
+import { useThemeStore } from '../stores/themeStore'
 
 const auth = useAuthStore()
+const themeStore = useThemeStore()
 
 const currentUser = computed(() => auth.currentUser)
 const userInitial = computed(() => auth.userInitial)
+const theme = computed(() => themeStore.theme)
 
 const profileForm = ref({
   fullName: currentUser.value?.fullName ?? '',
@@ -230,7 +234,6 @@ const showNew = ref(false)
 const showConfirm = ref(false)
 
 const preferences = ref({
-  theme: 'dark',
   emailNotifications: true,
   deadlineReminders: true,
   weeklySummary: true,
@@ -263,7 +266,8 @@ function savePassword() {
 }
 
 function savePreferences() {
-  window.alert('Preferences saved')
+  themeStore.setTheme(theme.value)
+  window.alert('Preferences saved — theme updated')
 }
 
 function confirmDeleteAccount() {

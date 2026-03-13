@@ -8,7 +8,7 @@
 
     <!-- Stats cards -->
     <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <div class="flex items-center justify-between">
           <div class="text-3xl">👥</div>
           <span class="text-xs font-semibold uppercase tracking-wide text-slate-400">Total Users</span>
@@ -16,7 +16,7 @@
         <div class="mt-4 text-3xl font-bold text-purple-200">{{ totalUsers }}</div>
       </div>
 
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <div class="flex items-center justify-between">
           <div class="text-3xl">📋</div>
           <span class="text-xs font-semibold uppercase tracking-wide text-slate-400">Total Tasks</span>
@@ -24,7 +24,7 @@
         <div class="mt-4 text-3xl font-bold text-sky-200">{{ totalTasks }}</div>
       </div>
 
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <div class="flex items-center justify-between">
           <div class="text-3xl">🎓</div>
           <span class="text-xs font-semibold uppercase tracking-wide text-slate-400">Active Students</span>
@@ -32,7 +32,7 @@
         <div class="mt-4 text-3xl font-bold text-emerald-200">{{ activeStudents }}</div>
       </div>
 
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <div class="flex items-center justify-between">
           <div class="text-3xl">📊</div>
           <span class="text-xs font-semibold uppercase tracking-wide text-slate-400">Completed Today</span>
@@ -43,7 +43,7 @@
 
     <!-- Users Table + Recent activity -->
     <section class="mt-8 grid gap-6 lg:grid-cols-2">
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <div class="flex items-center justify-between">
           <h2 class="text-xl font-semibold text-white">Users</h2>
           <span class="text-sm text-slate-400">{{ users.length }} total</span>
@@ -105,7 +105,7 @@
         </div>
       </div>
 
-      <div class="rounded-xl border border-white/10 bg-white/5 p-6 shadow-sm">
+      <div class="rounded-xl border card-theme p-6 shadow-sm">
         <h2 class="text-xl font-semibold text-white">Recent System Activity</h2>
         <ul class="mt-4 space-y-3">
           <li
